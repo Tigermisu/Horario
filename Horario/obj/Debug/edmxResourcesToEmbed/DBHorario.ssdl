@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="miSisicidiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'miSisicidiDB.dbo.Carrera_Dica' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Carrera_Dica">
+    <Key>
+      <PropertyRef Name="Nomina" />
+      <PropertyRef Name="Carrera" />
+    </Key>
+    <Property Name="Nomina" Type="char" MaxLength="9" Nullable="false" />
+    <Property Name="Carrera" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cita">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nomina" Type="char" MaxLength="9" Nullable="false" />
+    <Property Name="Fecha_inicio" Type="datetime" Nullable="false" />
+    <Property Name="Duracion" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dica">
+    <Key>
+      <PropertyRef Name="Nomina" />
+    </Key>
+    <Property Name="Nomina" Type="char" MaxLength="9" Nullable="false" />
+    <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telefono" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Horario_Ocupado">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nomina" Type="char" MaxLength="9" Nullable="false" />
+    <Property Name="Dia" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Hora_Inicio" Type="datetime" Nullable="false" />
+    <Property Name="Hora_Fin" Type="datetime" Nullable="false" />
+    <Property Name="Fecha_Caducidad" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Persona">
+    <Key>
+      <PropertyRef Name="Correo" />
+    </Key>
+    <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telefono" Type="char" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'miSisicidiDB.dbo.Persona_Cita' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Persona_Cita">
+    <Key>
+      <PropertyRef Name="Correo" />
+      <PropertyRef Name="Cita" />
+    </Key>
+    <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cita" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Carrera_Dica_Dica">
+    <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+    <End Role="Carrera_Dica" Type="Self.Carrera_Dica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dica">
+        <PropertyRef Name="Nomina" />
+      </Principal>
+      <Dependent Role="Carrera_Dica">
+        <PropertyRef Name="Nomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cita_Dica">
+    <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dica">
+        <PropertyRef Name="Nomina" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Nomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Horario_Ocupado_Dica">
+    <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+    <End Role="Horario_Ocupado" Type="Self.Horario_Ocupado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dica">
+        <PropertyRef Name="Nomina" />
+      </Principal>
+      <Dependent Role="Horario_Ocupado">
+        <PropertyRef Name="Nomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persona_Cita_Cita">
+    <End Role="Cita" Type="Self.Cita" Multiplicity="1" />
+    <End Role="Persona_Cita" Type="Self.Persona_Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cita">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Persona_Cita">
+        <PropertyRef Name="Cita" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persona_Cita_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Persona_Cita" Type="Self.Persona_Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="Correo" />
+      </Principal>
+      <Dependent Role="Persona_Cita">
+        <PropertyRef Name="Correo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="miSisicidiDBModelStoreContainer">
+    <EntitySet Name="Cita" EntityType="Self.Cita" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dica" EntityType="Self.Dica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Horario_Ocupado" EntityType="Self.Horario_Ocupado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Carrera_Dica" EntityType="Self.Carrera_Dica" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Carrera_Dica].[Nomina] AS [Nomina], 
+    [Carrera_Dica].[Carrera] AS [Carrera]
+    FROM [dbo].[Carrera_Dica] AS [Carrera_Dica]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Persona_Cita" EntityType="Self.Persona_Cita" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Persona_Cita].[Correo] AS [Correo], 
+    [Persona_Cita].[Cita] AS [Cita]
+    FROM [dbo].[Persona_Cita] AS [Persona_Cita]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Carrera_Dica_Dica" Association="Self.FK_Carrera_Dica_Dica">
+      <End Role="Dica" EntitySet="Dica" />
+      <End Role="Carrera_Dica" EntitySet="Carrera_Dica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cita_Dica" Association="Self.FK_Cita_Dica">
+      <End Role="Dica" EntitySet="Dica" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Horario_Ocupado_Dica" Association="Self.FK_Horario_Ocupado_Dica">
+      <End Role="Dica" EntitySet="Dica" />
+      <End Role="Horario_Ocupado" EntitySet="Horario_Ocupado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persona_Cita_Cita" Association="Self.FK_Persona_Cita_Cita">
+      <End Role="Cita" EntitySet="Cita" />
+      <End Role="Persona_Cita" EntitySet="Persona_Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persona_Cita_Persona" Association="Self.FK_Persona_Cita_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Persona_Cita" EntitySet="Persona_Cita" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

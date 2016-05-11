@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="miSisicidiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cita">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nomina" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Fecha_inicio" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Duracion" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Dica" Relationship="Self.FK_Cita_Dica" FromRole="Cita" ToRole="Dica" />
+    <NavigationProperty Name="Personas" Relationship="Self.Persona_Cita" FromRole="Cita" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="Dica">
+    <Key>
+      <PropertyRef Name="Nomina" />
+    </Key>
+    <Property Name="Nomina" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Citas" Relationship="Self.FK_Cita_Dica" FromRole="Dica" ToRole="Cita" />
+    <NavigationProperty Name="Carrera_Dica" Relationship="Self.FK_Carrera_Dica_Dica" FromRole="Dica" ToRole="Carrera_Dica" />
+    <NavigationProperty Name="Horario_Ocupado" Relationship="Self.FK_Horario_Ocupado_Dica" FromRole="Dica" ToRole="Horario_Ocupado" />
+  </EntityType>
+  <EntityType Name="Horario_Ocupado">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nomina" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Dia" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Hora_Inicio" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Duracion" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fecha_Caducidad" Type="Byte" />
+    <NavigationProperty Name="Dica" Relationship="Self.FK_Horario_Ocupado_Dica" FromRole="Horario_Ocupado" ToRole="Dica" />
+  </EntityType>
+  <EntityType Name="Persona">
+    <Key>
+      <PropertyRef Name="Correo" />
+    </Key>
+    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Citas" Relationship="Self.Persona_Cita" FromRole="Persona" ToRole="Cita" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Carrera_Dica">
+    <Key>
+      <PropertyRef Name="Nomina" />
+      <PropertyRef Name="Carrera" />
+    </Key>
+    <Property Name="Nomina" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Carrera" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Dica" Relationship="Self.FK_Carrera_Dica_Dica" FromRole="Carrera_Dica" ToRole="Dica" />
+  </EntityType>
+  <Association Name="FK_Cita_Dica">
+    <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dica">
+        <PropertyRef Name="Nomina" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Nomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrera_Dica_Dica">
+    <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+    <End Role="Carrera_Dica" Type="Self.Carrera_Dica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dica">
+        <PropertyRef Name="Nomina" />
+      </Principal>
+      <Dependent Role="Carrera_Dica">
+        <PropertyRef Name="Nomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Horario_Ocupado_Dica">
+    <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+    <End Role="Horario_Ocupado" Type="Self.Horario_Ocupado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dica">
+        <PropertyRef Name="Nomina" />
+      </Principal>
+      <Dependent Role="Horario_Ocupado">
+        <PropertyRef Name="Nomina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Persona_Cita">
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Citas" EntityType="Self.Cita" />
+    <EntitySet Name="Dicas" EntityType="Self.Dica" />
+    <EntitySet Name="Horario_Ocupado" EntityType="Self.Horario_Ocupado" />
+    <EntitySet Name="Personas" EntityType="Self.Persona" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Carrera_Dica" EntityType="Self.Carrera_Dica" />
+    <AssociationSet Name="FK_Cita_Dica" Association="Self.FK_Cita_Dica">
+      <End Role="Dica" EntitySet="Dicas" />
+      <End Role="Cita" EntitySet="Citas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrera_Dica_Dica" Association="Self.FK_Carrera_Dica_Dica">
+      <End Role="Dica" EntitySet="Dicas" />
+      <End Role="Carrera_Dica" EntitySet="Carrera_Dica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Horario_Ocupado_Dica" Association="Self.FK_Horario_Ocupado_Dica">
+      <End Role="Dica" EntitySet="Dicas" />
+      <End Role="Horario_Ocupado" EntitySet="Horario_Ocupado" />
+    </AssociationSet>
+    <AssociationSet Name="Persona_Cita" Association="Self.Persona_Cita">
+      <End Role="Cita" EntitySet="Citas" />
+      <End Role="Persona" EntitySet="Personas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="miSisicidiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'miSisicidiDB.dbo.Carrera_Dica' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Carrera_Dica">
+          <Key>
+            <PropertyRef Name="Nomina" />
+            <PropertyRef Name="Carrera" />
+          </Key>
+          <Property Name="Nomina" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Carrera" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cita">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nomina" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Fecha_inicio" Type="datetime" Nullable="false" />
+          <Property Name="Duracion" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Correo_persona" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dica">
+          <Key>
+            <PropertyRef Name="Nomina" />
+          </Key>
+          <Property Name="Nomina" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefono" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Horario_Ocupado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nomina" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Dia" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Hora_Inicio" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Duracion" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Fecha_Caducidad" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Correo" />
+          </Key>
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefono" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Carrera_Dica_Dica">
+          <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+          <End Role="Carrera_Dica" Type="Self.Carrera_Dica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dica">
+              <PropertyRef Name="Nomina" />
+            </Principal>
+            <Dependent Role="Carrera_Dica">
+              <PropertyRef Name="Nomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cita_Dica">
+          <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dica">
+              <PropertyRef Name="Nomina" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="Nomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cita_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Correo" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="Correo_persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Horario_Ocupado_Dica">
+          <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+          <End Role="Horario_Ocupado" Type="Self.Horario_Ocupado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dica">
+              <PropertyRef Name="Nomina" />
+            </Principal>
+            <Dependent Role="Horario_Ocupado">
+              <PropertyRef Name="Nomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="miSisicidiDBModelStoreContainer">
+          <EntitySet Name="Cita" EntityType="Self.Cita" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dica" EntityType="Self.Dica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Horario_Ocupado" EntityType="Self.Horario_Ocupado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carrera_Dica" EntityType="Self.Carrera_Dica" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Carrera_Dica].[Nomina] AS [Nomina], 
+    [Carrera_Dica].[Carrera] AS [Carrera]
+    FROM [dbo].[Carrera_Dica] AS [Carrera_Dica]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Carrera_Dica_Dica" Association="Self.FK_Carrera_Dica_Dica">
+            <End Role="Dica" EntitySet="Dica" />
+            <End Role="Carrera_Dica" EntitySet="Carrera_Dica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cita_Dica" Association="Self.FK_Cita_Dica">
+            <End Role="Dica" EntitySet="Dica" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cita_Persona" Association="Self.FK_Cita_Persona">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Horario_Ocupado_Dica" Association="Self.FK_Horario_Ocupado_Dica">
+            <End Role="Dica" EntitySet="Dica" />
+            <End Role="Horario_Ocupado" EntitySet="Horario_Ocupado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="miSisicidiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cita">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nomina" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Fecha_inicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Duracion" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo_persona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Dica" Relationship="Self.FK_Cita_Dica" FromRole="Cita" ToRole="Dica" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Cita_Persona" FromRole="Cita" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Dica">
+          <Key>
+            <PropertyRef Name="Nomina" />
+          </Key>
+          <Property Name="Nomina" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Citas" Relationship="Self.FK_Cita_Dica" FromRole="Dica" ToRole="Cita" />
+          <NavigationProperty Name="Carrera_Dica" Relationship="Self.FK_Carrera_Dica_Dica" FromRole="Dica" ToRole="Carrera_Dica" />
+          <NavigationProperty Name="Horario_Ocupado" Relationship="Self.FK_Horario_Ocupado_Dica" FromRole="Dica" ToRole="Horario_Ocupado" />
+        </EntityType>
+        <EntityType Name="Horario_Ocupado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nomina" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Dia" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Hora_Inicio" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Duracion" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha_Caducidad" Type="Byte" />
+          <NavigationProperty Name="Dica" Relationship="Self.FK_Horario_Ocupado_Dica" FromRole="Horario_Ocupado" ToRole="Dica" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Correo" />
+          </Key>
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Citas" Relationship="Self.FK_Cita_Persona" FromRole="Persona" ToRole="Cita" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Carrera_Dica">
+          <Key>
+            <PropertyRef Name="Nomina" />
+            <PropertyRef Name="Carrera" />
+          </Key>
+          <Property Name="Nomina" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Carrera" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Dica" Relationship="Self.FK_Carrera_Dica_Dica" FromRole="Carrera_Dica" ToRole="Dica" />
+        </EntityType>
+        <Association Name="FK_Cita_Dica">
+          <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dica">
+              <PropertyRef Name="Nomina" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="Nomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cita_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Correo" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="Correo_persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Carrera_Dica_Dica">
+          <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+          <End Role="Carrera_Dica" Type="Self.Carrera_Dica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dica">
+              <PropertyRef Name="Nomina" />
+            </Principal>
+            <Dependent Role="Carrera_Dica">
+              <PropertyRef Name="Nomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Horario_Ocupado_Dica">
+          <End Role="Dica" Type="Self.Dica" Multiplicity="1" />
+          <End Role="Horario_Ocupado" Type="Self.Horario_Ocupado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dica">
+              <PropertyRef Name="Nomina" />
+            </Principal>
+            <Dependent Role="Horario_Ocupado">
+              <PropertyRef Name="Nomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="miSisicidiDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Citas" EntityType="Self.Cita" />
+          <EntitySet Name="Dicas" EntityType="Self.Dica" />
+          <EntitySet Name="Horario_Ocupado" EntityType="Self.Horario_Ocupado" />
+          <EntitySet Name="Personas" EntityType="Self.Persona" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Carrera_Dica" EntityType="Self.Carrera_Dica" />
+          <AssociationSet Name="FK_Cita_Dica" Association="Self.FK_Cita_Dica">
+            <End Role="Dica" EntitySet="Dicas" />
+            <End Role="Cita" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cita_Persona" Association="Self.FK_Cita_Persona">
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Cita" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Carrera_Dica_Dica" Association="Self.FK_Carrera_Dica_Dica">
+            <End Role="Dica" EntitySet="Dicas" />
+            <End Role="Carrera_Dica" EntitySet="Carrera_Dica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Horario_Ocupado_Dica" Association="Self.FK_Horario_Ocupado_Dica">
+            <End Role="Dica" EntitySet="Dicas" />
+            <End Role="Horario_Ocupado" EntitySet="Horario_Ocupado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="miSisicidiDBModelStoreContainer" CdmEntityContainer="miSisicidiDBEntities">
+          <EntitySetMapping Name="Citas">
+            <EntityTypeMapping TypeName="miSisicidiDBModel.Cita">
+              <MappingFragment StoreEntitySet="Cita">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nomina" ColumnName="Nomina" />
+                <ScalarProperty Name="Fecha_inicio" ColumnName="Fecha_inicio" />
+                <ScalarProperty Name="Duracion" ColumnName="Duracion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Correo_persona" ColumnName="Correo_persona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dicas">
+            <EntityTypeMapping TypeName="miSisicidiDBModel.Dica">
+              <MappingFragment StoreEntitySet="Dica">
+                <ScalarProperty Name="Nomina" ColumnName="Nomina" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Horario_Ocupado">
+            <EntityTypeMapping TypeName="miSisicidiDBModel.Horario_Ocupado">
+              <MappingFragment StoreEntitySet="Horario_Ocupado">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nomina" ColumnName="Nomina" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Hora_Inicio" ColumnName="Hora_Inicio" />
+                <ScalarProperty Name="Duracion" ColumnName="Duracion" />
+                <ScalarProperty Name="Fecha_Caducidad" ColumnName="Fecha_Caducidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personas">
+            <EntityTypeMapping TypeName="miSisicidiDBModel.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="miSisicidiDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carrera_Dica">
+            <EntityTypeMapping TypeName="miSisicidiDBModel.Carrera_Dica">
+              <MappingFragment StoreEntitySet="Carrera_Dica">
+                <ScalarProperty Name="Nomina" ColumnName="Nomina" />
+                <ScalarProperty Name="Carrera" ColumnName="Carrera" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

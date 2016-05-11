@@ -1,0 +1,302 @@
+﻿@model IEnumerable<Horario.Models.Entities.Dica>
+@{
+    ViewBag.Title = "Nueva Cita";
+}
+
+<div class="welcome">
+    <div class="container">
+        <div class="wrapper">
+            <h1>Sistema de Citas Dicitec</h1>
+            <p class="lead">Bienvenido al sistema de citas Dicitec. Para crear una nueva cita con un DICA, por favor introduce tu información abajo.</p>
+            <p>Si ya tienes una cita, puedes consultar los detalles haciendo click @Html.ActionLink("aquí", "ViewCitas", "Cita")</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <form id="createCita">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="std-input">
+                    <label for="email">Introduce tu matrícula o correo:</label>
+                    <input type="email" id="email" required />
+                </div>
+            </div>
+        </div>
+        <div id="moreInfo" style="display: none;">
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="std-input">
+                        <label for="nombre">Tu nombre:</label>
+                        <input type="text" id="nombre" required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="std-input">
+                        <label for="apellido">Tu apellido:</label>
+                        <input type="text" id="apellido" required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="std-input">
+                        <label for="celular">Tu número de celular:</label>
+                        <input type="number" id="celular" required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="std-input">
+                        <label for="dicaname">Selecciona el DICA que quieres ver:</label>
+                        <select type="text" id="dicaname">
+                            <option value="null"></option>
+                            @foreach (var dica in Model)
+                        {
+                                <option value="@dica.Nomina">
+                                    @dica.Nombre @dica.Apellido (
+                                    @foreach (var carrera in dica.Carrera_Dica)
+                                {
+                                        @carrera.Carrera;@:
+                        })
+                                </option>
+                        }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="std-input">
+                        <label for="description">Describe brevemente el motivo de la cita:</label>
+                        <input type="text" id="description" required />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="horario-wrapper" style="display: none;">
+            <div class="horario-container">                
+                <label>Selecciona el Horario que quieres apartar:</label>
+                <nav>
+                    <ul class="pager" id="horario-pager">
+                        <li class="disabled" id="prev"><a>&larr;</a></li>
+                        <li id="next"><a>&rarr;</a></li>
+                    </ul>
+                </nav>
+                <div class="horario-info">
+                    <p>9:00am</p>
+                    <p>9:30am</p>
+                    <p>10:00am</p>
+                    <p>10:30am</p>
+                    <p>11:00am</p>
+                    <p>11:30am</p>
+                    <p>12:00pm</p>
+                    <p>12:30pm</p>
+                    <p>1:00pm</p>
+                    <p>1:30pm</p>
+                    <p>2:00pm</p>
+                    <p>2:30pm</p>
+                    <p>3:00pm</p>
+                    <p>3:30pm</p>
+                    <p>4:00pm</p>
+                    <p>4:30pm</p>
+                    <p>5:00pm</p>
+                    <p>5:30pm</p>
+                </div>
+                <div class="horario-day" data-day="l">
+                    <h3>Lunes</h3>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                </div>
+                <div class="horario-day" data-day="m">
+                    <h3>Martes</h3>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                </div>
+                <div class="horario-day" data-day="x">
+                    <h3>Miércoles</h3>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                </div>
+                <div class="horario-day" data-day="j">
+                    <h3>Jueves</h3>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                </div>
+                <div class="horario-day" data-day="v">
+                    <h3>Viernes</h3>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                    <div class="horario-grid"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="std-input">
+                        <label for="day">Día:</label>
+                        <input class="disabled" type="text" id="day" readonly />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="std-input">
+                        <label for="startHour">Hora de inicio:</label>
+                        <input class="disabled" type="text" id="startHour" readonly />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="std-input">
+                        <label for="duration">Duración:</label>
+                        <input class="disabled" type="text" id="duration" readonly />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-success btn-block std-button">Guardar Cita</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+    function getUserDetails(userEmail, isTec) {
+        $('body').append('<div class="full-page-loader"></div>')
+        $.ajax({
+            type: 'GET',
+            data: { email: userEmail },
+            url: '@Url.Action("GetStudentData", "Cita")',
+            success: function(data) {
+                if (data != null) {
+                    $('#nombre').val(data.Nombre);
+                    $('#apellido').val(data.Apellido);
+                    $('#celular').val(data.Telefono);
+                    $('#moreInfo').slideDown();
+                    app.scroll('#moreInfo');
+                } else {
+                    if (isTec) {
+                        alertify.alert('Matrícula no registrada, por favor reingresar.');
+                        $('#email').val('');
+                    } else {
+                        $('#moreInfo').slideDown();
+                        app.scroll('#moreInfo');
+                    }
+                }
+            },
+            complete: function () {
+                $('.full-page-loader').remove();
+            }
+        });
+    }
+
+    function getDicaHorario(dicaNomina, weekoffset) {
+        $('body').append('<div class="full-page-loader"></div>')
+        $.ajax({
+            type: 'GET',
+            data: { nomina: dicaNomina, weekoffset: weekoffset },
+            url: '@Url.Action("GetDicaHorario", "Cita")',
+            success: function (data) {
+                $('#horario-wrapper').slideDown();
+                if (weekoffset == 0){
+                    app.scroll('#dicaname');
+
+                }
+                app.populateHorario(data, weekoffset);
+            },
+            complete: function () {
+                $('.full-page-loader').remove();
+            }
+        });
+    }
+
+    function createCita(formData) {
+        $('body').append('<div class="full-page-loader"></div>');
+        $.ajax({
+            type: 'POST',
+            data: formData,
+            url: '@Url.Action("CreateCita", "Cita")',
+            success: function (data) {
+                alertify.alert('Cita creada satisfactoriamente.', function () {
+                    window.location.reload();
+                });
+            },
+            complete: function () {
+                $('.full-page-loader').remove();
+            }
+        });
+    }
+</script>

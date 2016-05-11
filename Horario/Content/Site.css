@@ -1,0 +1,297 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+.navbar {
+    background-color: #0039a6;
+    box-shadow: 0px 0px 10px 1px #333;
+}
+
+.navbar a {
+    color: #f0f0f0;
+}
+
+.navbar .nav a:hover {
+    color: #0039a6;
+}
+
+.navbar a.navbar-brand:hover {
+    color: #fff;
+}
+
+.navbar-toggle {
+    border-color: #f0f0f0;
+    transition: background 0.3s;
+}
+
+.navbar-toggle:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+
+.icon-bar {
+    background-color: #f0f0f0;
+}
+
+.welcome {
+    position: relative;
+    min-height: 400px;
+    width: 100%;
+    background: url(Images/happywhitestudents.jpg) no-repeat center center;
+    background-size: cover;
+    padding: 20px;
+}
+
+.welcome .wrapper {
+    position: absolute;
+    bottom: 0;
+}
+
+.welcome .wrapper h1, .welcome .wrapper p {
+    color: #f0f0f0;
+    font-size: 48px;
+    text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.1),  
+        1px -1px 0 rgba(0,0,0,0.1),
+        -1px 1px 0 rgba(0,0,0,0.1),
+        1px 1px 0 rgba(0,0,0,0.1);
+}
+
+.welcome .wrapper a {
+    color: #3498db;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.welcome .wrapper a:hover {
+    text-decoration: none;
+    background-color: #e0e0e0;
+}
+
+.welcome .wrapper p {
+    font-size: 24px;
+}
+
+label {
+    color: #666;
+}
+
+.std-input {
+    margin: 20px auto;
+}
+
+.std-input label {
+    display: block;
+    width: 100%;
+}
+
+.std-input input, .std-input select {
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    height: 40px;
+    padding: 5px;
+}
+
+.horario-container {
+    margin: 25px 0px 0px 0px;
+    text-align: center;
+}
+
+.horario-container * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;   
+}
+
+.horario-day h3 {
+    padding: 10px;
+    margin: 0px;
+    border-bottom: #333 solid 1px;
+    height: 40px;
+    font-size: 20px;
+}
+
+.horario-container > div {
+    width: 16.6%;
+    margin: 0 -3px;
+    display: inline-block;
+    min-height: 200px;
+    vertical-align: top;    
+}
+
+.horario-container .pager {
+    margin: 5px;
+}
+
+.horario-container label {
+    display: block;
+}
+
+.horario-day {
+    background-color: #f0f0f0;
+    border: #999 solid 1px;
+}
+
+.horario-info {
+    padding: 40px 10px;
+    max-width: 80px;
+}
+
+.pager li:not(.disabled) {
+    cursor: pointer;
+}
+
+.horario-info p {
+    text-align: right;
+    height: 30px;
+    margin: 0;
+    padding: 5px 0px;
+}
+
+.horario-grid {
+    cursor: pointer;
+    height: 30px;
+    border: #999 solid 1px;
+    margin: 0px -1px;
+}
+
+.horario-grid:not(.occupied):not(.selected):hover {
+    background-color: #e0e0e0;
+}
+
+.horario-grid.selected {
+    background-color: #2ecc71;
+    border-color: #27ae60;
+}
+
+.horario-grid.occupied {
+    background-color: #e74c3c;
+    cursor: not-allowed;
+    border-color: #c0392b;
+}
+
+.disabled:not(li) {
+    background-color: #eee;
+}
+
+.pager li.disabled a {
+    background-color: #eee;
+}
+
+.pager li.disabled a:hover {
+    background-color: #eee;
+}
+
+.std-button {
+    height: 40px;
+    margin-top: 44px;
+}
+
+thead td {
+    font-weight: 600;
+}
+
+.folio {
+    font-weight: 600;
+    text-align: center;
+}
+
+tbody .folio {
+    color: #c0392b;
+}
+
+
+
+footer {    
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    color: #f0f0f0;
+    background-color: #333;
+}
+
+footer p {
+    margin: 0px;
+    float: right;
+}
+
+footer p:first-child {
+    float: left;
+}
+
+.full-page-loader {
+    position: fixed;
+    background: url(Images/spin.svg) no-repeat center center;
+    background-color: rgba(0,0,0,0.3);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+@media (max-width: 1200px) {
+    .horario-day h3 {
+        font-size: 16px;
+        padding: 12px;
+    }    
+}
+
+@media (max-width: 991px) {
+    .horario-day h3 {
+        height: 60px;
+    }
+
+    .horario-info {
+        padding: 60px 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    footer p:first-child {
+        float: none;
+        text-align: center;
+    }
+    
+}
+
+@media (max-width: 600px) {
+    .welcome .wrapper h1 {
+        font-size: 24px;
+    }
+
+    .welcome .wrapper 
+    p {
+        font-size: 14px;
+    }
+
+    .welcome {
+        min-height: 300px;    
+    }
+
+    .horario-grid {
+        height: 20px;
+    }
+
+    .horario-info p {
+        font-size: 12px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .horario-day h3 {
+        font-size: 12px;
+        padding: 16px 2px;
+    }
+
+    .horario-info p {
+        margin-left: -15px;
+    }
+}

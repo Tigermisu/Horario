@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Ver Citas";
+}
+<div class="container">
+    <h3>Ver mis citas</h3>
+    <div class="std-input">
+        <label for="email">Introduce tu matrícula o correo:</label>
+        <input type="email" id="email" required />
+        <div class="cita-wrapper">
+
+        </div>
+    </div> 
+</div>
+
+
+
+<script>
+    function getUserDetails(userEmail, isTec) {
+        $('body').append('<div class="full-page-loader"></div>')
+        $.ajax({
+            type: 'GET',
+            data: { email: userEmail },
+            url: '@Url.Action("GetStudentData", "Cita")',
+            success: function (data) {
+                if (data != null) {
+                    var tableHtml = '<table class="table table-striped"><thead><tr><td class="folio"># Folio</td><td>Dica</td><td>Día</td><td>Descripción</td></tr></thead><tbody>';
+                    for (var i in data.Citas) {
+                        var c = data.Citas[i],
+                            fecha = new Date(c.Fecha_inicio);
+                        fecha = new Date(fecha.getTime() + fecha.getTimezoneOffset() * 1000 * 60);
+                        tableHtml += "<tr><td class='folio'>"+c.ID+"</td>";
+                        tableHtml += "<td>" + c.Dica.Nombre + " " + c.Dica.Apellido + "</td>";
+                        tableHtml += "<td>" + fecha.toLocaleString() + "</td>";
+                        tableHtml += "<td>" + c.Descripcion + "</td></tr>";
+                    }
+                    tableHtml += "</tbody></table>";
+                    $('.cita-wrapper').html(tableHtml);
+                } else {
+                    $('.cita-wrapper').html('<h3>No se han encontrado citas para este usuario</h3>');
+                }
+            },
+            complete: function () {
+                $('.full-page-loader').remove();
+            }
+        });
+    }
+</script>
